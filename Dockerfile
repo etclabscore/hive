@@ -22,10 +22,18 @@ ENV PATH   $GOPATH/bin:$PATH
 
 # Inject and build the hive dependencies (modified very rarely, cache builds)
 ADD vendor $GOPATH/src/github.com/ethereum/hive/vendor
-RUN (cd $GOPATH/src/github.com/ethereum/hive && go install ./...)
+# RUN ( \
+#   d=$GOPATH/src/github.com/ethereum/hive/vendor/github.com/ethereum/go-ethereum && \
+#   rm -rf "$d" && \
+#   git clone https://github.com/ethereum/go-ethereum "$d" && \
+#   git -C "$d" fetch --tags && \
+#   git -C "$d" checkout v1.8.0 \
+# )
+ADD chaintools $GOPATH/src/github.com/ethereum/hive/chaintools
 
 # Inject and build hive itself (modified during hive dev only, cache builds)
 ADD *.go $GOPATH/src/github.com/ethereum/hive/
+RUN (cd $GOPATH/src/github.com/ethereum/hive && go install ./...)
 
 WORKDIR $GOPATH/src/github.com/ethereum/hive
 RUN go install
