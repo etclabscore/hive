@@ -21,6 +21,7 @@ ENV GOPATH /gopath
 ENV PATH   $GOPATH/bin:$PATH
 
 # Inject and build the hive dependencies (modified very rarely, cache builds)
+ADD chaintools $GOPATH/src/github.com/ethereum/hive/chaintools
 ADD vendor $GOPATH/src/github.com/ethereum/hive/vendor
 RUN (cd $GOPATH/src/github.com/ethereum/hive && go install ./...)
 
