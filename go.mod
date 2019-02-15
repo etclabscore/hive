@@ -9,7 +9,7 @@ require (
 	github.com/docker/engine-api v0.0.0-20160701204206-139c221fcbe6
 	github.com/docker/go-units v0.3.1
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
-	github.com/ethereum/go-ethereum v1.8.22
+	github.com/ethereum/go-ethereum v1.8.20
 	github.com/fsouza/go-dockerclient v0.0.0-20160624230725-1a3d0cfd7814
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.0.0-20160407174126-ad28ea4487f0
