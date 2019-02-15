@@ -14,7 +14,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/fsouza/go-dockerclient"
+	docker "github.com/fsouza/go-dockerclient"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 
@@ -300,7 +300,7 @@ func copyBetweenContainers(daemon *docker.Client, dest, src string, path, target
 	if path == "" {
 		path = target
 	}
-	if path == "ignore"{
+	if path == "ignore" {
 		return nil
 	}
 	// Download a tarball of the file from the source container
@@ -409,6 +409,8 @@ func runContainer(daemon *docker.Client, id string, logger log15.Logger, logfile
 	if err := daemon.StartContainer(id, hostConfig); err != nil {
 		logger.Error("failed to start container", "error", err)
 		return nil, err
+	} else {
+		logger.Info("started container")
 	}
 	return fdClosingWaiter{
 		CloseWaiter: waiter,
