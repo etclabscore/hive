@@ -25,6 +25,7 @@
 #  - HIVE_MINER          address to credit with mining rewards (single thread)
 #  - HIVE_MINER_EXTRA    extra-data field to set for newly minted blocks
 #  - HIVE_SKIP_POW       If set, skip PoW verification during block import
+#  - HIVE_CHAIN          If set, uses --chain flag to configure client for this network
 
 # Immediately abort the script on any error encountered
 set -e
