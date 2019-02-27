@@ -13,20 +13,16 @@
 #   - Bind /var/lib/docker to an external volume for cache reuse
 #   - Forward UID envvar to reown docker and hive generated files
 #   - Run with --privileged to allow docker-in-docker containers
-FROM docker:dind
+FROM alpine:3.9
 
 # Configure the container for building hive
-RUN apk add --update musl-dev go && rm -rf /var/cache/apk/*
+RUN apk add --update musl-dev go=1.11.5-r0 git && rm -rf /var/cache/apk/*
 ENV GOPATH /gopath
 ENV PATH   $GOPATH/bin:$PATH
+ENV GO111MODULE on
 
 # Inject and build the hive dependencies (modified very rarely, cache builds)
-ADD vendor $GOPATH/src/github.com/ethereum/hive/vendor
-RUN (cd $GOPATH/src/github.com/ethereum/hive && go install ./...)
-
-# Inject and build hive itself (modified during hive dev only, cache builds)
-ADD *.go $GOPATH/src/github.com/ethereum/hive/
-
+ADD . $GOPATH/src/github.com/ethereum/hive/
 WORKDIR $GOPATH/src/github.com/ethereum/hive
 RUN go install
 
@@ -52,5 +48,5 @@ RUN \
 
 ENTRYPOINT ["hive.sh"]
 
-# Inject all other runtime resources (modified most frequently)
+# # Inject all other runtime resources (modified most frequently)
 COPY . $GOPATH/src/github.com/ethereum/hive
